@@ -3,151 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriTrack | Futuristic Health Monitor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Nokia Snake</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="bg-animated">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-
-    <div class="container">
-        <header class="glass-header">
-            <h1>NutriTrack</h1>
-            <p>Advanced Predictive Nutrition</p>
-        </header>
-
-        <main class="grid-layout">
-            <div class="left-column">
-                <section class="glass-card input-section">
-                    <h2>Log Nutrition Interface</h2>
-                    <div class="input-wrapper">
-                        <input type="text" id="foodInput" placeholder="Search Database (e.g. Biryani, Salmon...)" autocomplete="off">
-                        <button id="addBtn" class="btn-primary">Scan & Add</button>
-                        <div id="suggestionsBox" class="suggestions hidden"></div>
-                    </div>
-                </section>
-
-                <section class="glass-card history-section">
-                    <h2>Active Session Log</h2>
-                    <ul id="foodList" class="food-list">
-                        <li class="empty-state">System standing by. Awaiting food input.</li>
-                    </ul>
-                    <button id="analyzeDietBtn" class="btn-primary" style="width: 100%; margin-top: 1.5rem; background: linear-gradient(135deg, #8b5cf6, #3b82f6); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);">
-                        ✨ Analyze Diet Risks & Alternatives
-                    </button>
-                </section>
-            </div>
-
-            <div class="right-column">
-                <section class="glass-card dashboard-section">
-                    <h2>Metabolic Metrics</h2>
-                    
-                    <div class="chart-container">
-                        <canvas id="macroChart"></canvas>
-                    </div>
-
-                    <div class="nutrient-tracker mt-2">
-                        <div class="nutrient-header">
-                            <span>Calories</span>
-                            <span id="calText">0 / 2000 kcal</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill cal-fill" id="calFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div class="nutrient-tracker">
-                        <div class="nutrient-header">
-                            <span>Protein</span>
-                            <span id="proteinText">0 / 50g</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill protein-fill" id="proteinFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div class="nutrient-tracker">
-                        <div class="nutrient-header">
-                            <span>Fat</span>
-                            <span id="fatText">0 / 70g</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill fat-fill" id="fatFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div class="nutrient-tracker">
-                        <div class="nutrient-header">
-                            <span>Carbs</span>
-                            <span id="carbsText">0 / 260g</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill carbs-fill" id="carbsFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div class="nutrient-tracker">
-                        <div class="nutrient-header">
-                            <span>Sugar</span>
-                            <span id="sugarText">0 / 50g</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill sugar-fill" id="sugarFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <div class="nutrient-tracker">
-                        <div class="nutrient-header">
-                            <span>Sodium</span>
-                            <span id="sodiumText">0 / 2300mg</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill sodium-fill" id="sodiumFill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="alertsContainer" class="alerts-container">
-                    <!-- Dynamic alerts will appear here -->
-                </section>
-            </div>
-        </main>
-    </div>
-
-    <!-- AI Analysis Modal -->
-    <div id="aiAnalysisModal" class="modal hidden">
-        <div class="modal-content glass-card" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
-            <span class="close-modal" id="closeAnalysisModal">&times;</span>
-            <h2 style="color: #6d28d9;">🧬 Advanced Diet Analysis</h2>
-            
-            <div id="analysisLoading" class="hidden" style="text-align: center; padding: 2rem 0;">
-                <div class="spinner" style="border-top-color: #8b5cf6;"></div>
-                <p style="margin-top: 1rem; color: #8b5cf6; font-weight: 500;">Synthesizing medical risks and alternatives...</p>
-            </div>
-
-            <div id="analysisContent" class="hidden">
-                <p id="analysisSummary" style="font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.6;"></p>
-                
-                <h3 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.2rem;">⚠️ Predicted Disease Risks & Harmful Effects</h3>
-                <div id="diseaseRisksContainer" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
-                    <!-- Disease cards injected here -->
+    <div class="phone-container">
+        <div class="screen-border">
+            <div class="screen">
+                <div class="header">
+                    <span id="score">0000</span>
+                    <span id="high-score">HI:0000</span>
                 </div>
-
-                <h3 style="color: #10b981; margin-bottom: 1rem; font-size: 1.2rem;">🌱 Healthier Alternatives</h3>
-                <div id="alternativesContainer" style="display: flex; flex-direction: column; gap: 1rem;">
-                    <!-- Alternative cards injected here -->
+                <canvas id="gameCanvas" width="400" height="400"></canvas>
+                <div id="game-over-screen" class="hidden overlay">
+                    <p>GAME OVER</p>
+                    <p class="blink">PRESS SPACE TO RESTART</p>
+                </div>
+                <div id="start-screen" class="overlay">
+                    <p>SNAKE</p>
+                    <p class="blink">PRESS SPACE TO START</p>
                 </div>
             </div>
         </div>
+        <div class="controls-hint">
+            <p>Use Arrow Keys or WASD to move.<br>Press Space to start.</p>
+        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
